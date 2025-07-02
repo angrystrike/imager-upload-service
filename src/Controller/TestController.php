@@ -1,14 +1,18 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\DBAL\Connection;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TestController
+class TestController extends AbstractController
 {
     #[Route('/hello', methods: ['GET'])]
-    public function hello(): Response
+    public function hello(Connection $connection): JsonResponse
     {
-        return new Response('Hello from Upload Service!');
+        $results = $connection->fetchAllAssociative('SELECT * FROM test');
+
+        return new JsonResponse($results);
     }
 }
