@@ -18,3 +18,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MessageBus\Messages\:
+        resource: '../src/MessageBus/Messages'
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\MessageBus\Handlers\:
+        resource: '../src/MessageBus/Handlers'
+        autowire: true
+        autoconfigure: true
+        public: false
