@@ -3,7 +3,7 @@ FROM php:8.3-fpm
 RUN apt-get update && apt-get install -y \
     zip unzip git libpng-dev libjpeg-dev libonig-dev libxml2-dev \
     librabbitmq-dev libssl-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring gd \
+    && docker-php-ext-install pdo pdo_mysql mbstring gd fileinfo \
     && pecl install amqp \
     && docker-php-ext-enable amqp
 

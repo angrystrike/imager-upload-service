@@ -4,7 +4,7 @@ framework:
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 retry_strategy:
-                    max_retries: 3
+                    max_retries: 0
                     multiplier: 2
 
         default_bus: messenger.bus.default
@@ -14,5 +14,6 @@ framework:
 
         routing:
             'App\MessageBus\Messages\Message': async
+            'App\MessageBus\Messages\File': async
 
 
