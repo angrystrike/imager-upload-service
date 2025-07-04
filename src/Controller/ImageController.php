@@ -31,4 +31,17 @@ class ImageController extends AbstractController
 
         return new JsonResponse($images, JsonResponse::HTTP_OK, [], true);
     }
+
+//    #[Route('/images', methods: ['GET'])]
+//    public function images(): JsonResponse
+//    {
+//        $images = $this->imageService->getAllImages();
+//        $images = $this->serializer->serialize(
+//            $images,
+//            'json',
+//            ['groups' => 'image:read']
+//        );
+//
+//        return new JsonResponse($images, JsonResponse::HTTP_OK, [], true);
+//    }
 }
