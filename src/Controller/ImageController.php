@@ -2,15 +2,14 @@
 
 namespace App\Controller;
 
-use App\MessageBus\Messages\Message;
-use App\Repository\ImageRepository;
 use App\Service\ImageService;
-use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+
 
 class ImageController extends AbstractController
 {
@@ -20,28 +19,21 @@ class ImageController extends AbstractController
     ) {}
 
     #[Route('/images', methods: ['GET'])]
-    public function images(): JsonResponse
+    public function images(CacheInterface $cache): JsonResponse
     {
-        $images = $this->imageService->getAllImages();
-        $images = $this->serializer->serialize(
-            $images,
-            'json',
-            ['groups' => 'image:read']
-        );
+        $cacheKey = 'all_images_json';
+
+        $images = $cache->get($cacheKey, function (ItemInterface $item) {
+            $item->expiresAfter(3600);
+
+            $images = $this->imageService->getAllImages();
+            return $this->serializer->serialize(
+                $images,
+                'json',
+                ['groups' => 'image:read']
+            );
+        });
 
         return new JsonResponse($images, JsonResponse::HTTP_OK, [], true);
     }
-
-//    #[Route('/images', methods: ['GET'])]
-//    public function images(): JsonResponse
-//    {
-//        $images = $this->imageService->getAllImages();
-//        $images = $this->serializer->serialize(
-//            $images,
-//            'json',
-//            ['groups' => 'image:read']
-//        );
-//
-//        return new JsonResponse($images, JsonResponse::HTTP_OK, [], true);
-//    }
 }

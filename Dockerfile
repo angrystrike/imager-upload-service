@@ -4,8 +4,8 @@ RUN apt-get update && apt-get install -y \
     zip unzip git libpng-dev libjpeg-dev libonig-dev libxml2-dev \
     librabbitmq-dev libssl-dev \
     && docker-php-ext-install pdo pdo_mysql mbstring gd fileinfo \
-    && pecl install amqp \
-    && docker-php-ext-enable amqp
+    && pecl install amqp redis \
+    && docker-php-ext-enable amqp redis
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
