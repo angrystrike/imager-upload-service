@@ -57,5 +57,9 @@ class FileHandler
         $this->pusher->trigger('file-upload-info', 'file-uploaded-by-upload-service', [
             'text' => 'upload-service BE: File uploaded to S3. File name: ' . $s3_file_name,
         ]);
+
+        $this->pusher->trigger('new-images', 'image-uploaded', [
+            'url' => $s3_file_name
+        ]);
     }
 }
