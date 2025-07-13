@@ -21,6 +21,7 @@ class ImageController extends AbstractController
     #[Route('/images', methods: ['GET'])]
     public function images(CacheInterface $cache): JsonResponse
     {
+        return new JsonResponse([], JsonResponse::HTTP_OK, [], true);
         $cacheKey = 'all_images_json';
 
         $images = $cache->get($cacheKey, function (ItemInterface $item) {
