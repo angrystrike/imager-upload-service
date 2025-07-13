@@ -11,7 +11,7 @@ class TestController extends AbstractController
     #[Route('/hello', methods: ['GET'])]
     public function hello(Connection $connection): JsonResponse
     {
-        $results = $connection->fetchAllAssociative('SELECT * FROM test');
+        $results = ['tete'];
 
         return new JsonResponse($results);
     }
