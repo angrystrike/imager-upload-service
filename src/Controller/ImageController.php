@@ -22,7 +22,7 @@ class ImageController extends AbstractController
     public function images(CacheInterface $cache): JsonResponse
     {
         $cacheKey = 'all_images_json';
-
+        $test = null;
         $images = $cache->get($cacheKey, function (ItemInterface $item) {
             $item->expiresAfter(3600);
 
